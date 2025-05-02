@@ -1,6 +1,7 @@
 package app.courses.services;
 
 import app.courses.models.Course;
+import app.enrolments.models.Enrolment;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -40,7 +41,7 @@ public class CourseService {
         try {
             FileWriter fileWriter = new FileWriter(file);
             PrintWriter printWriter = new PrintWriter(fileWriter);
-            printWriter.println(courses);
+            printWriter.println(toSaveCourses());
             printWriter.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -50,7 +51,7 @@ public class CourseService {
     public String toSaveCourses() {
         String result = "";
         int i;
-        for (i=0; i<courses.size(); i++) {
+        for (i=0; i<courses.size()-1; i++) {
             result += courses.get(i).descriere();
         }
         return result+courses.get(i).descriere();
@@ -60,4 +61,29 @@ public class CourseService {
         courses.add(course);
         saveCourses();
     }
+    public Course getCoursesById(int id) {
+        for (Course course : courses) {
+            if (course.getId() == id) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    public Course chooseCoursebyName(String name) {
+        for (Course course : courses) {
+        if (course.getName().equals(name)) {
+            return course;
+        }
+        }
+        return null;
+    }
+
+
+
+    public Course mostUsedCourse() {
+
+    }
+
+
 }

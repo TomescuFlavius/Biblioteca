@@ -4,29 +4,28 @@ public class Enrolment {
     private  int id;
     private int studentId;
     private int courseId;
-    private float addedDate;
+    private String addedDate;
 
-    public Enrolment(int id, int studentId, int courseId, float addedDate) {
+    public Enrolment(int id, int studentId, int courseId, String addedDate) {
         this.id = id;
         this.studentId = studentId;
         this.courseId = courseId;
         this.addedDate = addedDate;
     }
-
-    public Enrolment() {
-        this.id=0;
-        this.studentId=0;
-        this.courseId=0;
-        this.addedDate=0;
+    public Enrolment(int studentId, int courseId, String addedDate) {
+        this.studentId = studentId;
+        this.courseId = courseId;
+        this.addedDate = addedDate;
     }
+
 
     public Enrolment(String text){
         text.split(",");
         this.id=Integer.parseInt(text.split(",")[0]);
         this.studentId=Integer.parseInt(text.split(",")[1]);
         this.courseId=Integer.parseInt(text.split(",")[2]);
-        this.addedDate=Float.parseFloat(text.split(",")[3]);
-    }
+        this.addedDate=text.split(",")[3];
+            }
 
     public String descriere(){
         String text="";
@@ -61,12 +60,16 @@ public class Enrolment {
         this.courseId = courseId;
     }
 
-    public float getAddedDate() {
+    public String getAddedDate() {
         return addedDate;
     }
 
-    public void setAddedDate(float addedDate) {
+    public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
     }
+    public String toSave(){
+        return id+","+studentId+","+courseId+","+addedDate+"\n";
+    }
+
 }
 

@@ -36,7 +36,7 @@ public class StudentService {
         try {
             FileWriter fw=new FileWriter(file);
             PrintWriter pw=new PrintWriter(fw);
-            pw.println(students);
+            pw.println(toSaveStudents());
             pw.close();
 
         }catch (Exception e) {
@@ -47,7 +47,7 @@ public class StudentService {
     public String toSaveStudents(){
         String text="";
         int i;
-        for(i=0;i<students.size();i++){
+        for(i=0;i<students.size()-1;i++){
             text+=students.get(i).descriere();
         }
         return text+students.get(i).descriere();
@@ -62,5 +62,13 @@ public class StudentService {
     public void addStudent(Student student){
         students.add(student);
         saveStudents();
+    }
+    public Student getStudentById(int id){
+        for(Student student:students){
+            if(student.getId()==id){
+                return student;
+            }
+        }
+        return null;
     }
 }

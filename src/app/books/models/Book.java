@@ -12,12 +12,10 @@ public class Book {
         this.name = name;
         this.addedDate = addedDate;
     }
-
-    public Book(){
-        this.id = 0;
-        this.studentId = 0;
-        this.name = "";
-        this.addedDate = "";
+    public Book(int studentId, String name, String addedDate) {
+        this.studentId = studentId;
+        this.name = name;
+        this.addedDate = addedDate;
     }
 
     public Book(String text){
@@ -30,10 +28,10 @@ public class Book {
 
     public String descriere(){
         String text="";
-        text+="id: " +this.id + "\n";
-        text+="studentId: " +this.studentId + "\n";
-        text+="name: " +this.name + "\n";
-        text+="addedDate: " +this.addedDate + "\n";
+        text+="id:" + this.id + ",";
+        text+="id student:"+this.studentId + ",";
+        text+="name:"+this.name + ",";
+        text+="data:"+this.addedDate+ "\n";
         return text;
     }
 
@@ -68,4 +66,8 @@ public class Book {
     public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
     }
+    public String toSave(){
+        return id+","+studentId+","+name+","+addedDate+"\n";
+    }
+
 }

@@ -7,6 +7,7 @@ import app.enrolments.models.Enrolment;
 import app.enrolments.services.EnrolmentService;
 import app.students.models.Student;
 import app.students.services.StudentService;
+import app.views.View;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,6 +15,7 @@ public class Main {
         CourseService courseService = new CourseService();
         EnrolmentService enrolmentService = new EnrolmentService();
         StudentService studentService = new StudentService();
-        studentService.showStudents();
+        View view = new View();
+        view.play();
     }
 }

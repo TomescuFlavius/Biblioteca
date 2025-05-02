@@ -5,23 +5,18 @@ public class Student {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private int age;
 
-    public Student(int id, String firstName, String lastName, String email, int age) {
+    public Student(int id, String firstName, String lastName, String email,String password, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
         this.age = age;
     }
 
-    public Student(){
-        this.id = 0;
-        this.firstName = "";
-        this.lastName = "";
-        this.email = "";
-        this.age = 0;
-    }
 
     public Student(String text){
         text.split(",");
@@ -29,7 +24,8 @@ public class Student {
         this.firstName = text.split(",")[1];
         this.lastName = text.split(",")[2];
         this.email = text.split(",")[3];
-        this.age = Integer.parseInt(text.split(",")[4]);
+        this.password = text.split(",")[4];
+        this.age = Integer.parseInt(text.split(",")[5]);
     }
 
     public String descriere(){
@@ -38,6 +34,7 @@ public class Student {
         text += "firstName: " + this.firstName + "\n";
         text += "lastName: " + this.lastName + "\n";
         text += "email: " + this.email + "\n";
+        text += "password: " + this.password + "\n";
         text += "age: " + this.age + "\n";
         return text;
     }
@@ -72,6 +69,12 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getAge() {
