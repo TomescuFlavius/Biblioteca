@@ -19,6 +19,7 @@ public class CourseService {
         file = new File("C:\\mycode\\oop\\Biblioteca\\src\\app\\courses\\file\\CourseFile");
         this.loadCourses();
     }
+    
     private void loadCourses() {
         try{
             Scanner scanner = new Scanner(file);
@@ -31,6 +32,7 @@ public class CourseService {
             e.printStackTrace();
         }
     }
+
     public void showCourses() {
         for (Course course : courses) {
             System.out.println(course.descriere());
@@ -61,6 +63,7 @@ public class CourseService {
         courses.add(course);
         saveCourses();
     }
+
     public Course getCoursesById(int id) {
         for (Course course : courses) {
             if (course.getId() == id) {
@@ -74,16 +77,33 @@ public class CourseService {
         for (Course course : courses) {
         if (course.getName().equals(name)) {
             return course;
-        }
+            }
         }
         return null;
     }
 
-
-
-    public Course mostUsedCourse() {
-
+    public void removeCoursebyName(String nume) {
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).getName().equals(nume)) {
+                courses.remove(i);
+                saveCourses();
+            }
+        }
     }
+
+    public List<Course> showEnrolmentsForStudent(List<Enrolment> enrolments) {
+        List<Course> courses1 = new ArrayList<>();
+        for(Enrolment enrolment : enrolments) {
+            int id = enrolment.getCourseId();
+            Course course =getCoursesById(id);
+            courses1.add(course);
+        }
+        return courses1;
+    }
+
+
+
+
 
 
 }

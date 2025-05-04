@@ -9,6 +9,7 @@ import app.enrolments.services.EnrolmentService;
 import app.students.models.Student;
 import app.students.services.StudentService;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.SortedMap;
@@ -23,15 +24,17 @@ public class View {
     private Book book;
     private Course course;
     private Enrolment enrolment;
-    public View() {
+
+    public View(Student st) {
         scanner = new Scanner(System.in);
         studentService = new StudentService();
         bookService = new BookService();
         courseService = new CourseService();
         enrolmentService = new EnrolmentService();
-        student = new Student("1,name,lname,test@test.com,psw,99");
+        student = st;
         this.play();
     }
+
     private void meniu() {
         System.out.println("*1*->Adaugare carte");
         System.out.println("*2*->Stergere carte");
@@ -39,8 +42,12 @@ public class View {
         System.out.println("*4*->Lista cursuri la care esti inscris");
         System.out.println("*5*->Inscriere curs");
         System.out.println("*6*->Cel mai bun curs");
-        System.out.println("*7*->");
+        System.out.println("*7*->Stergere curs");
+        System.out.println("*8*->Cartile mele");
+
+
     }
+
     public void play() {
         boolean running = true;
         while (running) {
@@ -54,7 +61,7 @@ public class View {
                     this.deleteBook();
                     break;
                 case 3:
-                    editBook();
+                    this.editBook();
                     break;
                 case 4:
                     this.showEnrolmentsByStudent();
@@ -66,7 +73,10 @@ public class View {
                     this.mostPopularCourse();
                     break;
                 case 7:
-                    System.out.println();
+                    this.removeCourse();
+                    break;
+                case 8:
+                    this.showBooks();
                     break;
 
                     default:
@@ -74,7 +84,6 @@ public class View {
             }
         }
     }
-
 
     public void addBook(){
 
@@ -91,7 +100,6 @@ public class View {
 
         this.bookService.showBooks();
     }
-
 
     public void deleteBook(){
         this.bookService.showBooks();
@@ -117,24 +125,33 @@ public class View {
         bookService.showBooks();
     }
 
-
-
     public void showEnrolmentsByStudent(){
-        int id;
-        System.out.println("Introduceti id-ul studentului pentru verificare cursuri la care este inscris");
-        id = Integer.parseInt(scanner.next());
-        this.enrolmentService.getEnrolmentsbyStudentId(id);
+
+        List<Enrolment> enrolmentList= this.enrolmentService.listGetEnrolmentsbyStudentId(this.student.getId());
+
+        List<Course> courses=this.courseService.showEnrolmentsForStudent(enrolmentList);
+
+        for (Course course:courses){
+            System.out.println(course.descriere());
+        }
+
+
+
+
+
         }
 
     public void courseEnrolment(){
         this.courseService.showCourses();
-        System.out.println("Alegeti un curs");
+        System.out.println("Alegeti un curs(numele):");
         String name=scanner.next();
         courseService.chooseCoursebyName(name);
         int courseId=courseService.chooseCoursebyName(name).getId();
-        System.out.println("Data inscrierii la curs:(an.luna.zi)");
+        System.out.println("Data inscrierii la curs (an.luna.zi):");
         String data=scanner.next();
+
         Enrolment enrolment1=new Enrolment(student.getId(), courseId, data);
+        System.out.println("Inscris la cursul:"+courseService.chooseCoursebyName(name).getName());
         enrolmentService.addEnrolment(enrolment1);
         enrolmentService.saveEnrolments();
         enrolmentService.showEnrolments();
@@ -145,15 +162,27 @@ public class View {
     public void mostPopularCourse(){
 
         System.out.println("most popular course:");
-        enrolmentService.contorAparitii(
+        int aparitii=enrolmentService.mostPopularCourse().getFrecventa();
+        System.out.println(courseService.getCoursesById(aparitii).descriere());
+
     }
 
+    public void removeCourse(){
+        this.courseService.showCourses();
+        System.out.println("Nume curs pentru stergere:");
+        String nume=scanner.next();
+        this.courseService.removeCoursebyName(nume);
 
+        System.out.println("Curs sters!");
+    }
 
+    public void showBooks(){
+        List<Book> books=this.bookService.getBooksByStudentId(student.getId());
+        for (Book book:books){
+            System.out.println(book.getName());
+        }
 
-
-
-
+    }
 
 
 

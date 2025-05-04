@@ -1,5 +1,6 @@
 package app.students.services;
 
+import app.books.models.Book;
 import app.students.models.Student;
 
 import java.io.File;
@@ -71,4 +72,25 @@ public class StudentService {
         }
         return null;
     }
+
+
+
+
+    public Student getStudentByEmailAndPassword(String email, String password) {
+    for(Student student:students){
+        if(student.getEmail().equals(email) && student.getPassword().equals(password)){
+            return student;
+        }
+    }
+    return null;
+    }
+
+
+
+
+
+
+
+
 }
+

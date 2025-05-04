@@ -67,7 +67,7 @@ public class Book {
         this.addedDate = addedDate;
     }
     public String toSave(){
-        return id+","+studentId+","+name+","+addedDate+"\n";
+        return id+","+studentId+","+name+","+addedDate;
     }
 
 }

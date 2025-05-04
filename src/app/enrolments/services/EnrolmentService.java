@@ -2,6 +2,7 @@ package app.enrolments.services;
 
 import app.courses.models.Course;
 import app.enrolments.models.Enrolment;
+import app.utile.Frecventa;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,6 +15,7 @@ import java.util.Scanner;
 public class EnrolmentService {
     private File file;
     private List<Enrolment> enrolments;
+    private List<Frecventa> frecvente;
     public EnrolmentService() {
         this.file = new File("C:\\mycode\\oop\\Biblioteca\\src\\app\\enrolments\\file\\Enrolments");
         this.enrolments = new ArrayList<Enrolment>();
@@ -64,12 +66,15 @@ public class EnrolmentService {
         saveEnrolments();
     }
 
-    public void getEnrolmentsbyStudentId(int id) {
+    public List<Enrolment> listGetEnrolmentsbyStudentId(int id) {
+
+        List<Enrolment> enrolmentList= new ArrayList<>();
         for (Enrolment enrolment : enrolments) {
-            if(id == enrolment.getStudentId()){
-                System.out.println(enrolment.descriere());
+            if (id == enrolment.getStudentId()) {
+                enrolmentList.add(enrolment);
             }
         }
+        return enrolmentList;
     }
 
     public Enrolment getEnrolmentById(int id) {
@@ -90,39 +95,44 @@ public class EnrolmentService {
         return randomId;
     }
 
-    public int contorAparitii(int courseId){
-        int ct=0;
-        for (int i=0;i<enrolments.size();i++) {
-            for (int j=i+1;j<enrolments.size();j++) {
-                if (enrolments.get(i).getCourseId() == enrolments.get(j).getCourseId()) {
-                    ct++;
-                }
+    public Frecventa mostPopularCourse() {
+        this.frecvente=getFrecvente();
+        Frecventa maxima=new Frecventa(0,0);
+        for (Frecventa current : frecvente) {
+            if(current.getFrecventa()>maxima.getFrecventa()){
+                maxima=current;
             }
         }
-        return ct;
+        return maxima;
     }
 
-    public void getEnrolmentsbyCourseId(int courseId) {
-        for (Enrolment enrolment : enrolments) {
-            if (enrolment.getCourseId() == courseId) {
-                System.out.println(enrolment.descriere());
+    public List<Frecventa> getFrecvente() {
+        List<Frecventa> frecventas = new ArrayList<>();
+        for(int i=0;i<enrolments.size();i++){
+            Frecventa frecventa=getFrecventaByCourseId(frecventas,enrolments.get(i).getCourseId());
+            if(frecventa!=null){
+                frecventa.setFrecventa(frecventa.getFrecventa()+1);
+            }else{
+                frecventas.add(new Frecventa(enrolments.get(i).getCourseId(),0));
             }
+
         }
+        return frecventas;
     }
 
-    public Course mostPopularCourse() {
+
+ //functie ce primeste ca parametru Lista de frecvente , idCursului si returneaza frecvenata
+
+ public Frecventa getFrecventaByCourseId(List<Frecventa> frecventas, int idCourse) {
         int ct=0;
-        for (int i=0;i<enrolments.size();i++){
-            for (int j=i+1;j<enrolments.size();j++){
-                if (enrolments.get(i).getCourseId() == enrolments.get(j).getCourseId()&& ct!=i){
-                    ct++;
-                }
-                else if (enrolments.get(i).getCourseId()==enrolments.get(j).getCourseId()&& ct==i){
-                    
-                }
+        for (int i=0;i<frecventas.size();i++) {
+            if(frecventas.get(i).getIdCurs()==idCourse){
+                return frecventas.get(i);
             }
         }
-    }
+        return null;
+ }
+
 
 
 

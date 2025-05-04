@@ -108,5 +108,15 @@ public class BookService {
             }
         }
     }
+
+    public List<Book> getBooksByStudentId(int id) {
+        List<Book> filteredBooks = new ArrayList<>();
+        for (Book book  :books) {
+            if (book.getStudentId() == id) {
+                filteredBooks.add(book);
+            }
+        }
+        return filteredBooks;
+    }
 }
 
