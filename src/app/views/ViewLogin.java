@@ -55,7 +55,22 @@ public class ViewLogin {
         }
 
         public void signIn() {
+
+        System.out.println("Firstname:");
+        String nume=scanner.nextLine();
+        System.out.println("Lastname:");
+        String prenume=scanner.nextLine();
         System.out.println("Email:");
-        String email=scanner.nextLine();
+        String email = scanner.nextLine();
+        System.out.println("Password:");
+        String password=scanner.nextLine();
+        System.out.println("Age:");
+        int age = scanner.nextInt();
+
+        Student student =new Student(nume,prenume,email,password,age);
+        student.setId(studentService.generateId());
+        this.studentService.addStudent(student);
+        studentService.saveStudents();
+        View view = new View(student);
         }
     }

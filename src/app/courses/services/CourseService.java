@@ -19,7 +19,7 @@ public class CourseService {
         file = new File("C:\\mycode\\oop\\Biblioteca\\src\\app\\courses\\file\\CourseFile");
         this.loadCourses();
     }
-    
+
     private void loadCourses() {
         try{
             Scanner scanner = new Scanner(file);

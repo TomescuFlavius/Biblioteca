@@ -16,7 +16,9 @@ public class Student {
         this.password = password;
         this.age = age;
     }
-
+    public String toSave(){
+        return id+","+firstName+","+lastName+","+email+","+password+","+age;
+    }
 
     public Student(String text){
         text.split(",");
@@ -26,6 +28,13 @@ public class Student {
         this.email = text.split(",")[3];
         this.password = text.split(",")[4];
         this.age = Integer.parseInt(text.split(",")[5]);
+    }
+    public Student(String firstName, String lastName, String email, String password, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.age = age;
     }
 
     public String descriere(){

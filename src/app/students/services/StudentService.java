@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class StudentService {
@@ -49,9 +50,9 @@ public class StudentService {
         String text="";
         int i;
         for(i=0;i<students.size()-1;i++){
-            text+=students.get(i).descriere();
+            text+=students.get(i).toSave()+"\n";
         }
-        return text+students.get(i).descriere();
+        return text+students.get(i).toSave();
     }
 
     public void showStudents(){
@@ -85,6 +86,22 @@ public class StudentService {
     return null;
     }
 
+    public int generateId() {
+        Random random = new Random();
+        int randomId = random.nextInt(1000) + 1;
+        while (this.getStudentById(randomId) != null) {
+            randomId = random.nextInt(1000) + 1;
+        }
+        return randomId;
+    }
+
+    public Student register() {
+
+        for(Student student:students){
+            return student;
+        }
+        return null;
+    }
 
 
 
